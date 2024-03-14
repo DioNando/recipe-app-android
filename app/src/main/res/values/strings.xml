@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Recipe App</string>
+    <string name="recipe_for_you">Recipe for you</string>
+    <string name="by_us">By us</string>
+    <string name="explore_recipes">Explore Recipes</string>
+    <string name="sign_in">Sign In</string>
+    <string name="register">Register</string>
+    <string name="already_registered">Already registered ?</string>
+    <string name="password">Password</string>
+    <string name="email_adress">Email Adress</string>
+    <string name="full_name">Full Name</string>
+    <string name="create_an_account">Create An Account</string>
+    <string name="don_t_have_an_account">Don\'t have an account ?</string>
+    <string name="register_here">Register here</string>
+    <string name="login_explore"><![CDATA[Login & Explore]]></string>
 </resources>
