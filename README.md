@@ -72,7 +72,3 @@ Le sujet décrit succinctement la modification. Certaines règles doivent être 
 
 - feat(controller): add post's controller
 - docs(route): add swagger documentation
-
-**Commit avec un corps**
-
-**Commit complet (corps et footer)**
