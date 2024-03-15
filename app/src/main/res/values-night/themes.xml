@@ -4,4 +4,15 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="Theme.RecipeApp" parent="Base.Theme.RecipeApp" />
+
+    <style name="Theme.RecipeApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.RecipeApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.RecipeApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
