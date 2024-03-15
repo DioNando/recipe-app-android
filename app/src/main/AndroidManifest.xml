@@ -16,7 +16,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.RecipeApp.NoActionBar">
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar">
         </activity>
         <activity
             android:name=".WelcomeActivity"
