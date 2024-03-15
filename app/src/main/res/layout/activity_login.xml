@@ -93,7 +93,7 @@
             android:onClick="register"
             android:text="@string/register_here"
             android:textAlignment="center"
-            android:textColor="@color/primary"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -118,7 +118,7 @@
             android:onClick="mainActivity"
             android:text="Just Explore"
             android:textAllCaps="false"
-            android:textColor="@color/primary"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp" />
 
         <Button
