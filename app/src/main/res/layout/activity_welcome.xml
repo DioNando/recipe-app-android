@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:foreground="@drawable/foreground_design_welcome"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/bg4"
+        app:srcCompat="@drawable/bg2"
         tools:layout_editor_absoluteX="146dp"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -87,6 +87,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ill_hamburger_cuate" />
+        app:srcCompat="@drawable/ill_hamburger_pana" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

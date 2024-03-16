@@ -39,5 +39,5 @@
 
     <style name="Theme.RecipeApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.RecipeApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.RecipeApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 </resources>

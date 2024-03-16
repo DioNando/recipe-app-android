@@ -139,6 +139,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:srcCompat="@drawable/ill_chef_cuate" />
+        app:srcCompat="@drawable/ill_hello_pana" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

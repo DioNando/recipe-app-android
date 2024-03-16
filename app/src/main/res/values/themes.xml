@@ -37,7 +37,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.RecipeApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.RecipeApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
 
     <style name="Theme.RecipeApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
