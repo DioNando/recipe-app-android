@@ -71,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:background="@android:color/transparent"
+            android:textColor="?attr/colorPrimary"
             android:onClick="login"
             android:padding="15dp"
             android:text="@string/sign_in"
