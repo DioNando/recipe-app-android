@@ -87,6 +87,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/hamburger_cuate" />
+        app:srcCompat="@drawable/ill_hamburger_cuate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

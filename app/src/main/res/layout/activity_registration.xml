@@ -22,7 +22,6 @@
         android:fontFamily="@font/sigmar_one"
         android:text="@string/register"
         android:padding="20dp"
-        android:background="@drawable/rounded_bottom_corner"
         android:textAlignment="center"
         android:textColor="?attr/colorPrimary"
         android:textSize="32sp"
@@ -33,7 +32,6 @@
         android:id="@+id/linearLayout4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_top_corner"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
@@ -99,7 +97,6 @@
                 android:onClick="mainActivity"
                 android:text="@string/register"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -142,6 +139,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:srcCompat="@drawable/chef_cuate" />
+        app:srcCompat="@drawable/ill_chef_cuate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

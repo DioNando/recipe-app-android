@@ -8,7 +8,7 @@
                 <solid android:color="@android:color/transparent" />
                 <stroke
                     android:width="2dp"
-                    android:color="@color/secondary" />
+                    android:color="?attr/colorPrimary" />
                 <corners android:radius="300dp" />
             </shape>
         </item>
@@ -17,7 +17,7 @@
                 <solid android:color="@android:color/transparent" />
                 <stroke
                     android:width="2dp"
-                    android:color="@color/primary" />
+                    android:color="?attr/colorPrimary" />
                 <corners android:radius="300dp" />
             </shape>
         </item>
