@@ -1,6 +1,7 @@
 package com.example.recipeapp.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,11 @@ import java.util.List;
 
 public class RandomRecipeAdapter extends RecyclerView.Adapter<RandomRecipeViewHolder> {
     Context context;
-    List<Recipe> list;
+    List<Recipe> recipes;
 
     public RandomRecipeAdapter(Context context, List<Recipe> list) {
         this.context = context;
-        this.list = list;
+        this.recipes = list;
     }
 
     @NonNull
@@ -34,14 +35,17 @@ public class RandomRecipeAdapter extends RecyclerView.Adapter<RandomRecipeViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RandomRecipeViewHolder holder, int position) {
-holder.textView_title.setText(list.get(position).title);
+        Recipe recipe = recipes.get(position);
+holder.textView_title.setText(recipe.title);
 holder.textView_title.setSelected(true);
-Picasso.get().load(list.get(position).image).into(holder.imageView_food);
+        Log.d("RandomRecipeAdapter", "Chargement de l'image : " + recipes.get(position).image);
+Picasso.get().load(recipe.image).into(holder.imageView_food);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        Log.d("RandomRecipeAdapter", "Taille : " + recipes.size());
+        return recipes.size();
     }
 }
 
@@ -55,4 +59,6 @@ ImageView imageView_food;
            textView_title=itemView.findViewById(R.id.textView_title);
            imageView_food=itemView.findViewById(R.id.recipeImageView);
        }
+
+
    }

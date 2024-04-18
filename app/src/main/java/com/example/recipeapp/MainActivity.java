@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.recipeapp.Adapters.RandomRecipeAdapter;
 import com.example.recipeapp.Listeners.RandomRecipeResponseListener;
 import com.example.recipeapp.Models.RandomRecipeApiResponse;
-import com.example.recipeapp.data.Recipe;
+import com.example.recipeapp.Models.Recipe;
 import com.example.recipeapp.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         manager = new RequestManager(this);
         manager.getRandomRecipies(randomRecipeResponseListener);
         dialog.show();
+
     }
 
         private final RandomRecipeResponseListener randomRecipeResponseListener=new RandomRecipeResponseListener() {
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
             recyclerView=findViewById(R.id.recyclerView);
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,1));
+            recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL,false));
             randomRecipeAdapter=new RandomRecipeAdapter(MainActivity.this,response.recipes);
             recyclerView.setAdapter(randomRecipeAdapter);
             }
