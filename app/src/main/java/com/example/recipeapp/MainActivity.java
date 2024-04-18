@@ -1,22 +1,20 @@
 package com.example.recipeapp;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipeapp.data.Recipe;
 import com.example.recipeapp.databinding.ActivityMainBinding;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,8 +23,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private RecipeAdapter recipeAdapter;
 
     private SpoonacularApi spoonacularApi;
 
@@ -41,25 +39,28 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
+                // Action de votre FloatingActionButton
             }
         });
 
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_ingredient, R.id.nav_recipe, R.id.nav_favorite, R.id.nav_profile)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Initialisez Retrofit
+        // Initialiser le RecyclerView
+        RecyclerView recyclerView = binding.recyclerView;
+
+
+        // Spécifier le nombre de colonnes pour le GridLayoutManager
+        int numberOfColumns = 2; // Vous pouvez ajuster ce nombre selon vos préférences
+
+        // Créer un GridLayoutManager avec le nombre de colonnes spécifié
+        GridLayoutManager layoutManager = new GridLayoutManager(MainActivity.this, numberOfColumns, RecyclerView.VERTICAL, false);
+
+        // Associer le GridLayoutManager à votre RecyclerView
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        recipeAdapter = new RecipeAdapter(new ArrayList<>());
+        recyclerView.setAdapter(recipeAdapter);
+
         spoonacularApi = RetrofitClient.getClient().create(SpoonacularApi.class);
 
         // Effectuez la recherche de recettes
@@ -74,37 +75,21 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     RecipeSearchResponse recipeSearchResponse = response.body();
                     if (recipeSearchResponse != null && recipeSearchResponse.getRecipes() != null) {
-                        // Récupérez les recettes et traitez-les ici
                         List<Recipe> recipes = recipeSearchResponse.getRecipes();
-                        // Par exemple, vous pouvez afficher le titre de la première recette
-                        if (!recipes.isEmpty()) {
-                            Recipe firstRecipe = recipes.get(0);
-                            String firstRecipeTitle = firstRecipe.getTitle();
-                            // Affichez le titre dans un toast ou dans un élément de votre interface utilisateur
-                            Toast.makeText(MainActivity.this, "First recipe: " + firstRecipeTitle, Toast.LENGTH_SHORT).show();
-                        }
+                        Log.d("MainActivity", "Number of recipes: " + recipes.size());
+                        recipeAdapter.setRecipes(recipes); // Mettre à jour la liste des recettes dans l'adaptateur
                     }
                 } else {
-                    // Gérer les erreurs de réponse de l'API
-                    // Par exemple, afficher un message d'erreur
-                    Toast.makeText(MainActivity.this, "Error: " + response.message(), Toast.LENGTH_SHORT).show();
+
+                    Log.e("RecipeSearch", "Erreur lors de la recherche de recettes : " + response.message());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<RecipeSearchResponse> call, @NonNull Throwable t) {
-                // Gérer les erreurs de réseau
-                // Par exemple, afficher un message d'erreur
-                Toast.makeText(MainActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                Log.e("RecipeSearch", "Erreur réseau lors de la recherche de recettes : " + t.getMessage());
             }
         });
     }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
 }
-
