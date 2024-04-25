@@ -24,5 +24,9 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/icon_person_24px"
             android:title="@string/profile" />
+        <item
+            android:id="@+id/btn_logout"
+            android:icon="@drawable/icon_logout_24px"
+            android:title="@string/logout" />
     </group>
 </menu>
