@@ -31,4 +31,5 @@
     <string name="log_out">Log out</string>
     <string name="login_with_your_account">Login with your account</string>
     <string name="register_on_recipes">Register on recipes</string>
+    <string name="logout">Logout</string>
 </resources>
