@@ -24,11 +24,11 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
         dialog = new ProgressDialog(this);
         dialog.setTitle("Loading...");
         manager = new RequestManager(this);
-        //manager.getRandomRecipies(randomRecipeResponseListener);
+        manager.getRandomRecipies(randomRecipeResponseListener);
         dialog.show();
 
     }
