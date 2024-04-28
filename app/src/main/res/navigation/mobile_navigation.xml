@@ -9,11 +9,15 @@
         android:id="@+id/nav_home"
         android:name="com.example.recipeapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_ingredient"
+            app:destination="@id/nav_ingredient" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_ingredient"
-        android:name="com.example.recipeapp.ui.favorite.FavoriteFragment"
+        android:name="com.example.recipeapp.ui.ingredient.IngredientFragment"
         android:label="@string/ingredient"
         tools:layout="@layout/fragment_ingredient" />
 
