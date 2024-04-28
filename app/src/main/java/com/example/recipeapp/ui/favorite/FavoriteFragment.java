@@ -7,8 +7,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recipeapp.R;
 import com.example.recipeapp.databinding.FragmentFavoriteBinding;
+
+import java.util.ArrayList;
 
 public class FavoriteFragment extends Fragment {
 

@@ -29,6 +29,8 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
-        app:srcCompat="@drawable/icon_fastfood_24px" />
+        android:visibility="gone"
+        app:srcCompat="@drawable/icon_search_24px"
+        tools:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

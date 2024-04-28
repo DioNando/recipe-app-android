@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recipeapp.Adapters.FavoriteAdapter;
 import com.example.recipeapp.Adapters.RandomRecipeAdapter;
+import com.example.recipeapp.Adapters.RecipeAdapter;
 import com.example.recipeapp.Listeners.RandomRecipeResponseListener;
 import com.example.recipeapp.Models.RandomRecipeApiResponse;
 import com.example.recipeapp.R;
@@ -20,6 +22,8 @@ import com.example.recipeapp.RequestManager;
 import com.example.recipeapp.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
+
+    private FragmentHomeBinding binding;
 
     private ProgressDialog dialog;
     private RequestManager manager;
@@ -29,16 +33,31 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentHomeBinding binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        dialog = new ProgressDialog(requireContext());
-        dialog.setTitle("Loading...");
-        manager = new RequestManager(requireContext());
-        manager.getRandomRecipies(randomRecipeResponseListener);
-        dialog.show();
-        recyclerView = binding.recyclerView;
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        // dialog = new ProgressDialog(requireContext());
+        // dialog.setTitle("Loading...");
+        // manager = new RequestManager(requireContext());
+        // manager.getRandomRecipies(randomRecipeResponseListener);
+        // dialog.show();
+        // recyclerView = binding.recyclerView;
+        // recyclerView.setHasFixedSize(true);
+        // recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+
+        RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView1.setLayoutManager(layoutManager1);
+        RecipeAdapter adapterRecipe = new RecipeAdapter();
+        recyclerView1.setAdapter(adapterRecipe);
+
+        RecyclerView recyclerView2 = root.findViewById(R.id.recyclerViewFavorite);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView2.setLayoutManager(layoutManager2);
+        FavoriteAdapter adapterFavorite = new FavoriteAdapter();
+        recyclerView2.setAdapter(adapterFavorite);
+
         return root;
     }
 
