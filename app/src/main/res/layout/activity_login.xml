@@ -19,12 +19,12 @@
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/sigmar_one"
+        android:fontFamily="@font/patrick_hand_sc"
         android:padding="20dp"
         android:text="@string/explore_recipes"
         android:textAlignment="center"
         android:textColor="?attr/colorPrimary"
-        android:textSize="32sp"
+        android:textSize="42sp"
         app:layout_constraintTop_toTopOf="@+id/imageView3"
         tools:layout_editor_absoluteX="20dp" />
 
@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:srcCompat="@drawable/ill_healthy_options_pana" />
+        app:srcCompat="@drawable/breakfast_food_rafiki" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
