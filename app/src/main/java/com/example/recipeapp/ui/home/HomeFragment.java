@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipeapp.Adapters.FavoriteAdapter;
+import com.example.recipeapp.Adapters.IngredientAdapter;
 import com.example.recipeapp.Adapters.RandomRecipeAdapter;
 import com.example.recipeapp.Adapters.RecipeAdapter;
 import com.example.recipeapp.Listeners.RandomRecipeResponseListener;
@@ -36,14 +37,14 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // dialog = new ProgressDialog(requireContext());
-        // dialog.setTitle("Loading...");
-        // manager = new RequestManager(requireContext());
-        // manager.getRandomRecipies(randomRecipeResponseListener);
-        // dialog.show();
-        // recyclerView = binding.recyclerView;
-        // recyclerView.setHasFixedSize(true);
-        // recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+         dialog = new ProgressDialog(requireContext());
+         dialog.setTitle("Loading...");
+         manager = new RequestManager(requireContext());
+         manager.getRandomRecipies(randomRecipeResponseListener);
+         dialog.show();
+         recyclerView = binding.recyclerView;
+         recyclerView.setHasFixedSize(true);
+         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
 
         RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);
@@ -52,11 +53,19 @@ public class HomeFragment extends Fragment {
         RecipeAdapter adapterRecipe = new RecipeAdapter();
         recyclerView1.setAdapter(adapterRecipe);
 
-        RecyclerView recyclerView2 = root.findViewById(R.id.recyclerViewFavorite);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView recyclerView2 = root.findViewById(R.id.recyclerViewIngredient);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView2.setLayoutManager(layoutManager2);
+        IngredientAdapter adapterIngredient = new IngredientAdapter();
+        recyclerView2.setAdapter(adapterIngredient);
+
+        RecyclerView recyclerView3 = root.findViewById(R.id.recyclerViewFavorite);
+        LinearLayoutManager layoutManager3 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView3.setLayoutManager(layoutManager3);
         FavoriteAdapter adapterFavorite = new FavoriteAdapter();
-        recyclerView2.setAdapter(adapterFavorite);
+        recyclerView3.setAdapter(adapterFavorite);
+
+
 
         return root;
     }

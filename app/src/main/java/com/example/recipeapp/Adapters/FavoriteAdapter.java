@@ -25,7 +25,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 4;
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {

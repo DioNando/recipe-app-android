@@ -34,4 +34,5 @@
     <string name="api_key">3b603fcae7834594ae55b4052a02428d</string>
     <string name="looking_for_a_recipe">Looking for a recipe ?</string>
     <string name="recipes_saved">Recipes saved</string>
+    <string name="ingredients">Ingredients</string>
 </resources>
