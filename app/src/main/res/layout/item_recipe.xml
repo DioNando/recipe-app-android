@@ -21,7 +21,6 @@
             android:textStyle="bold"
             android:textSize="22sp"
             android:padding="8dp"
-            android:textColor="@color/md_theme_light_primary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <ImageView

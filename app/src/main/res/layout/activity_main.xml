@@ -25,7 +25,16 @@
         android:visibility="visible"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer"
-        tools:visibility="visible" />
+        tools:visibility="visible" >
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="wrap_content"
+            android:layout_height="190dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dp"
+            app:srcCompat="@drawable/recipe_book_rafiki" />
+    </com.google.android.material.navigation.NavigationView>
     <!--<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
