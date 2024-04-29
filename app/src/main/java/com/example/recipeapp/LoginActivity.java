@@ -15,8 +15,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.recipeapp.databinding.ActivityLoginBinding;
+import com.example.recipeapp.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -103,8 +106,10 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                     });
 
         }else{
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("navigateToHome", true);
+            startActivity(intent);
+            finish();
             }
     }
 

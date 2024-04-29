@@ -73,12 +73,23 @@ public class MainActivity extends AppCompatActivity {
         //verifier si un user est deja connecter
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        // Récupérer le layout du nav_header
-        View headerView = navigationView.getHeaderView(0);
-        // Récupérer la TextView où afficher l'adresse e-mail de l'utilisateur
-        TextView emailTextView = headerView.findViewById(R.id.textView);
-        // Définir le texte de la TextView avec l'adresse e-mail de l'utilisateur
-        emailTextView.setText(user.getEmail());
+        if (user != null) {
+            // Récupérer le layout du nav_header
+            View headerView = navigationView.getHeaderView(0);
+            // Récupérer la TextView où afficher l'adresse e-mail de l'utilisateur
+            TextView emailTextView = headerView.findViewById(R.id.textView);
+            // Définir le texte de la TextView avec l'adresse e-mail de l'utilisateur
+            emailTextView.setText(user.getEmail());
+            // Afficher le bouton de déconnexion
+            logoutMenuItem.setVisible(true);
+        }else {
+            // Masquer le bouton de déconnexion
+            logoutMenuItem.setVisible(false);
+        }
+
+        if (getIntent().getBooleanExtra("navigateToHome", false)) {
+            navigateToHomeFragment();
+        }
     }
 
 
@@ -104,6 +115,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    //Methode qui permet de naviguer vers le homefragment sans etre connecter
+    public void navigateToHomeFragment() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController.navigate(R.id.nav_home);
+    }
+
 
 
 }
