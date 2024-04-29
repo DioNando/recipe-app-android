@@ -1,4 +1,4 @@
-package com.example.recipeapp.ui.profile.ingredient;
+package com.example.recipeapp.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;

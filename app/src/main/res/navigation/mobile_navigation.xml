@@ -13,14 +13,14 @@
 
     <fragment
         android:id="@+id/nav_ingredient"
-        android:name="com.example.recipeapp.ui.favorite.FavoriteFragment"
+        android:name="com.example.recipeapp.ui.ingredient.IngredientFragment"
         android:label="@string/ingredient"
         tools:layout="@layout/fragment_ingredient" />
 
     <fragment
         android:id="@+id/nav_recipe"
-        android:name="com.example.recipeapp.ui.ingredient.IngredientFragment"
-        android:label="Recipe"
+        android:name="com.example.recipeapp.ui.recipe.RecipeFragment"
+        android:label="@string/recipe"
         tools:layout="@layout/fragment_recipe" />
     <fragment
         android:id="@+id/nav_favorite"
@@ -29,7 +29,7 @@
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.example.recipeapp.ui.profile.ingredient.ProfileFragment"
+        android:name="com.example.recipeapp.ui.profile.ProfileFragment"
         android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>
