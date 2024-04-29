@@ -15,7 +15,7 @@ import com.example.recipeapp.databinding.FragmentProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class ProfileFragment extends Fragment implements View.OnClickListener{
+public class ProfileFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FragmentProfileBinding binding;
@@ -35,10 +35,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             startActivity(intent);
             getActivity().finish(); // Optionnel : fermer l'activité actuelle
         }else{
-            binding.textView6.setText(user.getEmail());
+
         }
 
-        binding.logout.setOnClickListener(this);
 
         return root;
     }
@@ -47,15 +46,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-        FirebaseAuth.getInstance().signOut();
-        Toast.makeText(getContext(), "logout successfull", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();
     }
 
 }

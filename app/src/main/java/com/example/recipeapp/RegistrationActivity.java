@@ -86,11 +86,6 @@ public class RegistrationActivity extends AppCompatActivity implements  View.OnC
                             progressBar.setVisibility(v.GONE);
                             if (task.isSuccessful()) {
 
-                                //My_Models models=new My_Models(username,email,password);
-                                //Strind id=task.getResult().getUser().getUid();
-                                //firestore.collection("users").document().set(models).
-
-
                                 Toast.makeText(RegistrationActivity.this, "Account created!.",
                                         Toast.LENGTH_SHORT).show();
                                 Intent intent =new Intent(RegistrationActivity.this,LoginActivity.class);
