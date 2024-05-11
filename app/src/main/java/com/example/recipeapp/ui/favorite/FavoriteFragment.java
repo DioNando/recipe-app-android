@@ -32,8 +32,8 @@ public class FavoriteFragment extends Fragment {
         RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView1.setLayoutManager(layoutManager1);
-        RecipeAdapter adapterRecipe = new RecipeAdapter();
-        recyclerView1.setAdapter(adapterRecipe);
+        // RecipeAdapter adapterRecipe = new RecipeAdapter();
+        // recyclerView1.setAdapter(adapterRecipe);
 
         RecyclerView recyclerView2 = root.findViewById(R.id.recyclerViewIngredient);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);

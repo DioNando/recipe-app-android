@@ -83,8 +83,7 @@
                     android:text="Hi, Jannet"
                     android:textAlignment="viewEnd"
                     android:textColor="?attr/colorPrimary"
-                    android:textSize="24sp"
-                     />
+                    android:textSize="24sp" />
 
             </LinearLayout>
 

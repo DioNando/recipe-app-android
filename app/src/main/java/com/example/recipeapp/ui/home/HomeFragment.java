@@ -33,28 +33,20 @@ public class HomeFragment extends Fragment {
     private RequestManager manager;
 
     private RandomRecipeAdapter randomRecipeAdapter;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView1;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-         /* dialog = new ProgressDialog(requireContext());
-         dialog.setTitle("Loading...");
-         manager = new RequestManager(requireContext());
-         manager.getRandomRecipies(randomRecipeResponseListener);
-         dialog.show();
-         recyclerView = binding.recyclerView;
-         recyclerView.setHasFixedSize(true);
-         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext())); */
+        dialog = new ProgressDialog(requireContext());
+        dialog.setTitle("Loading...");
+        manager = new RequestManager(requireContext());
+        manager.getRandomRecipies(randomRecipeResponseListener);
+        dialog.show();
 
-
-        RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView1.setLayoutManager(layoutManager1);
-        RecipeHomeAdapter adapterHomeRecipe = new RecipeHomeAdapter();
-        recyclerView1.setAdapter(adapterHomeRecipe);
+        recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);
 
         RecyclerView recyclerView2 = root.findViewById(R.id.recyclerViewIngredient);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -77,8 +69,14 @@ public class HomeFragment extends Fragment {
         @Override
         public void didFetch(RandomRecipeApiResponse response, String message) {
             dialog.dismiss();
-            randomRecipeAdapter = new RandomRecipeAdapter(requireContext(), response.recipes);
-            recyclerView.setAdapter(randomRecipeAdapter);
+            //randomRecipeAdapter = new RandomRecipeAdapter(requireContext(), response.recipes);
+            //recyclerView.setAdapter(randomRecipeAdapter);
+
+            RecipeHomeAdapter adapterHomeRecipe = new RecipeHomeAdapter(requireContext(), response.recipes);
+            LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView1.setLayoutManager(layoutManager1);
+            recyclerView1.setHasFixedSize(true);
+            recyclerView1.setAdapter(adapterHomeRecipe);
         }
 
         @Override
