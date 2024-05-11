@@ -7,17 +7,35 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.recipeapp.databinding.FragmentIngredientBinding;
+import com.example.recipeapp.Adapters.RecipeAdapter;
+import com.example.recipeapp.R;
+import com.example.recipeapp.databinding.FragmentRecipeBinding;
 
 public class RecipeFragment extends Fragment {
 
-    private FragmentIngredientBinding binding;
+    private FragmentRecipeBinding binding;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        binding = FragmentIngredientBinding.inflate(inflater, container, false);
+        binding = FragmentRecipeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView1.setLayoutManager(layoutManager1);
+        RecipeAdapter adapterRecipe = new RecipeAdapter();
+        recyclerView1.setAdapter(adapterRecipe);
+
+        binding.btnDetailRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_nav_recipe_to_nav_detail_recipe);
+            }
+        });
 
         return root;
     }

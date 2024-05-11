@@ -9,24 +9,64 @@
         android:id="@+id/nav_home"
         android:name="com.example.recipeapp.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_detail_recipe"
+            app:destination="@id/nav_detail_recipe" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_detail_ingredient"
+            app:destination="@id/nav_detail_ingredient" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_ingredient"
         android:name="com.example.recipeapp.ui.ingredient.IngredientFragment"
         android:label="@string/ingredient"
-        tools:layout="@layout/fragment_ingredient" />
+        tools:layout="@layout/fragment_ingredient" >
+        <action
+            android:id="@+id/action_nav_ingredient_to_nav_detail_ingredient"
+            app:destination="@id/nav_detail_ingredient" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_detail_ingredient"
+        android:name="com.example.recipeapp.ui.ingredient.DetailIngredientFragment"
+        android:label="@string/ingredient"
+        tools:layout="@layout/fragment_detail_ingredient" >
+        <action
+            android:id="@+id/action_nav_detail_ingredient_to_nav_detail_recipe"
+            app:destination="@id/nav_detail_recipe" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_recipe"
         android:name="com.example.recipeapp.ui.recipe.RecipeFragment"
         android:label="@string/recipe"
-        tools:layout="@layout/fragment_recipe" />
+        tools:layout="@layout/fragment_recipe" >
+        <action
+            android:id="@+id/action_nav_recipe_to_nav_detail_recipe"
+            app:destination="@id/nav_detail_recipe" />
+        <action
+            android:id="@+id/action_nav_recipe_to_nav_detail_ingredient"
+            app:destination="@id/nav_detail_ingredient" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_detail_recipe"
+        android:name="com.example.recipeapp.ui.recipe.DetailRecipeFragment"
+        android:label="@string/recipe"
+        tools:layout="@layout/fragment_detail_recipe" />
     <fragment
         android:id="@+id/nav_favorite"
         android:name="com.example.recipeapp.ui.favorite.FavoriteFragment"
         android:label="@string/favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_nav_favorite_to_nav_detail_recipe"
+            app:destination="@id/nav_detail_recipe" />
+        <action
+            android:id="@+id/action_nav_favorite_to_nav_detail_ingredient"
+            app:destination="@id/nav_detail_ingredient" />
+    </fragment>
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.recipeapp.ui.profile.ProfileFragment"

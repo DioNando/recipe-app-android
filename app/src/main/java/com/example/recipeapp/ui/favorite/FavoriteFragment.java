@@ -10,6 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recipeapp.Adapters.IngredientAdapter;
+import com.example.recipeapp.Adapters.IngredientHomeAdapter;
+import com.example.recipeapp.Adapters.RecipeAdapter;
+import com.example.recipeapp.Adapters.RecipeHomeAdapter;
 import com.example.recipeapp.R;
 import com.example.recipeapp.databinding.FragmentFavoriteBinding;
 
@@ -24,6 +28,18 @@ public class FavoriteFragment extends Fragment {
 
         binding = FragmentFavoriteBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView1.setLayoutManager(layoutManager1);
+        RecipeAdapter adapterRecipe = new RecipeAdapter();
+        recyclerView1.setAdapter(adapterRecipe);
+
+        RecyclerView recyclerView2 = root.findViewById(R.id.recyclerViewIngredient);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView2.setLayoutManager(layoutManager2);
+        IngredientAdapter adapterIngredient = new IngredientAdapter();
+        recyclerView2.setAdapter(adapterIngredient);
 
         return root;
     }
