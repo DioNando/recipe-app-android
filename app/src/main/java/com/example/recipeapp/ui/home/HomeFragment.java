@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +22,7 @@ import com.example.recipeapp.Adapters.RandomRecipeAdapter;
 import com.example.recipeapp.Adapters.RecipeAdapter;
 import com.example.recipeapp.Adapters.RecipeHomeAdapter;
 import com.example.recipeapp.Listeners.RandomRecipeResponseListener;
+import com.example.recipeapp.Listeners.RecipeClickListener;
 import com.example.recipeapp.Models.RandomRecipeApiResponse;
 import com.example.recipeapp.R;
 import com.example.recipeapp.RequestManager;
@@ -72,7 +75,7 @@ public class HomeFragment extends Fragment {
             //randomRecipeAdapter = new RandomRecipeAdapter(requireContext(), response.recipes);
             //recyclerView.setAdapter(randomRecipeAdapter);
 
-            RecipeHomeAdapter adapterHomeRecipe = new RecipeHomeAdapter(requireContext(), response.recipes);
+            RecipeHomeAdapter adapterHomeRecipe = new RecipeHomeAdapter(requireContext(), response.recipes, recipeClickListener);
             LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView1.setLayoutManager(layoutManager1);
             recyclerView1.setHasFixedSize(true);
@@ -82,6 +85,17 @@ public class HomeFragment extends Fragment {
         @Override
         public void didError(String message) {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private final RecipeClickListener recipeClickListener= new RecipeClickListener() {
+        @Override
+        public void onRecipeClicked(String id) {
+            Bundle bundle = new Bundle();
+            bundle.putString("recipe_id", id);
+            NavController navController = Navigation.findNavController(requireView());
+            navController.navigate(R.id.action_nav_home_to_nav_detail_recipe, bundle);
+
         }
     };
 }

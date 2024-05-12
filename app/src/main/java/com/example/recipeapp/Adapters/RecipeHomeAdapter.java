@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.recipeapp.Listeners.RecipeClickListener;
 import com.example.recipeapp.Models.Recipe;
 import com.example.recipeapp.R;
 import com.squareup.picasso.Picasso;
@@ -22,10 +23,12 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.Ca
 
     Context context;
     List<Recipe> recipes;
+    RecipeClickListener listener;
 
-    public RecipeHomeAdapter(Context context, List<Recipe> list) {
+    public RecipeHomeAdapter(Context context, List<Recipe> list, RecipeClickListener listener) {
         this.context = context;
         this.recipes = list;
+        this.listener=listener;
     }
 
     @NonNull
@@ -42,6 +45,12 @@ public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.Ca
         holder.textView_title.setSelected(true);
         Log.d("RandomRecipeAdapter", "Chargement de l'image : " + recipes.get(position).image);
         Picasso.get().load(recipe.image).into(holder.imageView_food);
+        holder.random_list_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onRecipeClicked(String.valueOf(recipes.get(holder.getAdapterPosition()).id));
+            }
+        });
     }
 
     @Override
