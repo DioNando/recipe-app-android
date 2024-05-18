@@ -97,10 +97,6 @@ public class DetailRecipeFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "No recipe id provided", Toast.LENGTH_SHORT).show();
         }
-
-        // Afficher l'ID dans le TextView
-        TextView textView = view.findViewById(R.id.text_view_id);
-        textView.setText(String.valueOf(id));
         findViews(view);
         return view;
     }
