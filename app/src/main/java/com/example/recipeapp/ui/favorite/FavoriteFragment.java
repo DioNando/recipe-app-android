@@ -38,8 +38,8 @@ public class FavoriteFragment extends Fragment {
         RecyclerView recyclerView2 = root.findViewById(R.id.recyclerViewIngredient);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView2.setLayoutManager(layoutManager2);
-        IngredientAdapter adapterIngredient = new IngredientAdapter();
-        recyclerView2.setAdapter(adapterIngredient);
+        // IngredientAdapter adapterIngredient = new IngredientAdapter();
+        // recyclerView2.setAdapter(adapterIngredient);
 
         return root;
     }
