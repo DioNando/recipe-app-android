@@ -4,8 +4,12 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.text.Html;
+import android.text.Spanned;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,10 +119,14 @@ public class DetailRecipeFragment extends Fragment {
             dialog.dismiss();
             textView_meal_name.setText(response.title);
             textView_meal_source.setText(response.sourceName);
-            textView_meal_summary.setText(response.summary);
+            Spanned summary = Html.fromHtml(response.summary, Html.FROM_HTML_MODE_LEGACY);
+            textView_meal_summary.setText(summary);
             Picasso.get().load(response.image).into(imageView_meal_image);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recycler_meal_ingredients.getContext(),
+                    DividerItemDecoration.VERTICAL);
+            recycler_meal_ingredients.addItemDecoration(dividerItemDecoration);
             recycler_meal_ingredients.setHasFixedSize(true);
-            recycler_meal_ingredients.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+            recycler_meal_ingredients.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
             ingredientAdapter =new IngredientAdapter(getContext(),response.extendedIngredients);
             recycler_meal_ingredients.setAdapter(ingredientAdapter);
 

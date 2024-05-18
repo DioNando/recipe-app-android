@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Ca
 
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.CardViewHolder holder, int position) {
+        holder.textView_ingredient_name.setText(list.get(position).name);
+        holder.textView_ingredient_name.setSelected(true);
+        holder.textView_ingredient_quantity.setText(list.get(position).original);
+        holder.textView_ingredient_quantity.setSelected(true);
         Picasso.get().load("https://img.spoonacular.com/ingredients_100x100/"+list.get(position).image).into(holder.imageView_ingredients);
     }
 
@@ -44,9 +49,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Ca
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
+        TextView textView_ingredient_quantity,textView_ingredient_name;
         ImageView imageView_ingredients;
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
+            textView_ingredient_quantity=itemView.findViewById(R.id.textView_ingredient_quantity);
+            textView_ingredient_name=itemView.findViewById(R.id.textView_ingredient_name);
             imageView_ingredients=itemView.findViewById(R.id.imageView_ingredient);
         }
     }

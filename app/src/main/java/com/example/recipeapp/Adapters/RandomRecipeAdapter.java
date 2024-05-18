@@ -56,8 +56,6 @@ ImageView imageView_food;
        public RandomRecipeViewHolder(@NonNull View itemView) {
            super(itemView);
            random_list_container=itemView.findViewById(R.id.random_list_container);
-           textView_title=itemView.findViewById(R.id.textView_title);
-           imageView_food=itemView.findViewById(R.id.recipeImageView);
        }
 
 
