@@ -46,6 +46,33 @@
                     app:tint="?attr/colorSecondary"/>
 
             </LinearLayout>
+            <Spinner
+                android:id="@+id/spinner_tags"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:entries="@array/tags"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <androidx.cardview.widget.CardView
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/md_theme_surfaceDim_highContrast"
+                android:layout_margin="8dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize">
+
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchView_home"
+                    app:queryHint="Search your recipe..."
+                    app:iconifiedByDefault="false"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+
+            </androidx.cardview.widget.CardView>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewRecipe"

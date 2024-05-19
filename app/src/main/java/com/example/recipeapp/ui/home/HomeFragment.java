@@ -24,6 +24,9 @@ import com.example.recipeapp.R;
 import com.example.recipeapp.RequestManager;
 import com.example.recipeapp.databinding.FragmentHomeBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
@@ -33,6 +36,7 @@ public class HomeFragment extends Fragment {
 
     //private RandomRecipeAdapter randomRecipeAdapter;
     private RecyclerView recyclerView1;
+    List<String> tags = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class HomeFragment extends Fragment {
         dialog = new ProgressDialog(requireContext());
         dialog.setTitle("Loading...");
         manager = new RequestManager(requireContext());
-        manager.getRandomRecipies(randomRecipeResponseListener);
+        manager.getRandomRecipes(randomRecipeResponseListener,tags);
         dialog.show();
 
         recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);

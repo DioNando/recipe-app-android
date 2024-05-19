@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import androidx.appcompat.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,11 +26,17 @@ import com.example.recipeapp.R;
 import com.example.recipeapp.RequestManager;
 import com.example.recipeapp.databinding.FragmentRecipeBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RecipeFragment extends Fragment {
 
     private FragmentRecipeBinding binding;
     private ProgressDialog dialog;
     private RequestManager manager;
+    private Spinner spinner;
+    List<String> tags = new ArrayList<>();
+    SearchView searchView;
     private RecyclerView recyclerView1;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,8 +46,33 @@ public class RecipeFragment extends Fragment {
 
         dialog = new ProgressDialog(requireContext());
         dialog.setTitle("Loading...");
+        searchView = root.findViewById(R.id.searchView_home);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                tags.clear();
+                tags.add(query);
+                manager.getRandomRecipes(randomRecipeResponseListener, tags);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        spinner = root.findViewById(R.id.spinner_tags);
+        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.tags,
+                R.layout.spinner_text
+        );
+        arrayAdapter.setDropDownViewResource(R.layout.spinner_inner_text);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(spinnerSelectedListener);
         manager = new RequestManager(requireContext());
-        manager.getRandomRecipies(randomRecipeResponseListener);
+        manager.getRandomRecipes(randomRecipeResponseListener,tags);
         dialog.show();
 
         recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);
@@ -70,6 +105,21 @@ public class RecipeFragment extends Fragment {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
         }
     };
+    private final AdapterView.OnItemSelectedListener spinnerSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            tags.clear();
+            tags.add(adapterView.getSelectedItem().toString());
+            manager.getRandomRecipes(randomRecipeResponseListener, tags);
+            dialog.show();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+            // No implementation
+        }
+    };
+
 
     private final RecipeClickListener recipeClickListener= new RecipeClickListener() {
         @Override
