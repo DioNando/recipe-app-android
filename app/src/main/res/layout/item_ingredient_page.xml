@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     app:cardBackgroundColor="@android:color/transparent"
+    android:id="@+id/ingredient_list_container"
     app:cardElevation="0dp">
 
     <LinearLayout
@@ -48,14 +49,6 @@
                 android:paddingVertical="4dp"
                 android:text="Ingredient name" />
 
-            <TextView
-                android:id="@+id/textView_ingredient_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="4dp"
-                android:text="Quantity"
-                android:textSize="12sp"
-                android:textStyle="italic" />
         </LinearLayout>
 
     </LinearLayout>

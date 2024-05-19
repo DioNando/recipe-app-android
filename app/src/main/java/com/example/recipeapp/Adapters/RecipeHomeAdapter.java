@@ -19,26 +19,27 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CardViewHolder> {
+public class RecipeHomeAdapter extends RecyclerView.Adapter<RecipeHomeAdapter.CardViewHolder> {
+
     Context context;
     List<Recipe> recipes;
     RecipeClickListener listener;
 
-    public RecipeAdapter(Context context, List<Recipe> list, RecipeClickListener listener) {
+    public RecipeHomeAdapter(Context context, List<Recipe> list, RecipeClickListener listener) {
         this.context = context;
         this.recipes = list;
         this.listener=listener;
-
     }
+
     @NonNull
     @Override
-    public RecipeAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe, parent, false);
-        return new RecipeAdapter.CardViewHolder(itemView);
+    public RecipeHomeAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipe_home, parent, false);
+        return new RecipeHomeAdapter.CardViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipeAdapter.CardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecipeHomeAdapter.CardViewHolder holder, int position) {
         Recipe recipe = recipes.get(position);
         holder.textView_title.setText(recipe.title);
         holder.textView_title.setSelected(true);
@@ -54,7 +55,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CardViewHo
 
     @Override
     public int getItemCount() {
-        // return 8;
+        //return 8;
         Log.d("RandomRecipeAdapter", "Taille : " + recipes.size());
         return recipes.size();
     }
@@ -66,8 +67,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CardViewHo
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
             random_list_container=itemView.findViewById(R.id.random_list_container);
-            textView_title=itemView.findViewById(R.id.titleRecipe);
-            imageView_food=itemView.findViewById(R.id.imageRecipe);
+            textView_title=itemView.findViewById(R.id.titleRecipeHome);
+            imageView_food=itemView.findViewById(R.id.imageRecipeHome);
         }
     }
 }

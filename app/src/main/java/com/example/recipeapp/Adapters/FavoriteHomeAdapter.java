@@ -9,35 +9,36 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipeapp.Listeners.FavoriteClickListener;
+import com.example.recipeapp.Listeners.RecipeClickListener;
 import com.example.recipeapp.R;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardViewHolder> {
+public class FavoriteHomeAdapter extends RecyclerView.Adapter<FavoriteHomeAdapter.CardViewHolder> {
 
     FavoriteClickListener listener;
-    public FavoriteAdapter(FavoriteClickListener listener) {
+    public FavoriteHomeAdapter(FavoriteClickListener listener) {
     this.listener=listener;
     }
 
     @NonNull
     @Override
-    public FavoriteAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_favorite, parent, false);
-        return new FavoriteAdapter.CardViewHolder(itemView);
+    public FavoriteHomeAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_favorite_home, parent, false);
+        return new FavoriteHomeAdapter.CardViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FavoriteAdapter.CardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FavoriteHomeAdapter.CardViewHolder holder, int position) {
         holder.favorite_list_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onFavoriteClicked(String.valueOf(6432));
+                listener.onFavoriteClicked(String.valueOf(4556));
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 8;
+        return 4;
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
