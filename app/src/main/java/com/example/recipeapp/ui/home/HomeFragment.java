@@ -14,11 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.recipeapp.Adapters.FavoriteAdapter;
 import com.example.recipeapp.Adapters.FavoriteHomeAdapter;
-import com.example.recipeapp.Adapters.IngredientAdapter;
-import com.example.recipeapp.Adapters.IngredientHomeAdapter;
-import com.example.recipeapp.Adapters.RecipeAdapter;
 import com.example.recipeapp.Adapters.RecipeHomeAdapter;
 import com.example.recipeapp.Listeners.FavoriteClickListener;
 import com.example.recipeapp.Listeners.RandomRecipeResponseListener;
