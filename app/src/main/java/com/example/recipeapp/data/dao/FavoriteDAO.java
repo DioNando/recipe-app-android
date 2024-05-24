@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface FavoriteDAO {
     @Query("SELECT * FROM Favorite")
-    List<Favorite> getAll();
+    List<Favorite> getAllFavorites();
 
     /* @Query("SELECT * FROM Favorite WHERE id = :id")
     Favorite findById(int id); */

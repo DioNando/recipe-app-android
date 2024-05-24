@@ -85,7 +85,7 @@ public class DetailRecipeFragment extends Fragment {
         return fragment;
     }
 
-    private FavoriteDatabase favoriteDB;
+    private FavoriteDatabase favoriteDatabase;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,19 +95,7 @@ public class DetailRecipeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
-            @Override
-            public void onCreate(@NonNull SupportSQLiteDatabase db) {
-                super.onCreate(db);
-            }
-
-            @Override
-            public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                super.onOpen(db);
-            }
-        };
-
-        favoriteDB = Room.databaseBuilder(requireContext(), FavoriteDatabase.class, "Favorite_DB").addCallback(myCallBack).build();
+        favoriteDatabase = FavoriteDatabase.getInstance(this);
     }
 
     @Override
@@ -143,7 +131,7 @@ public class DetailRecipeFragment extends Fragment {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            favoriteDB.favoriteDao().addFavorite(fav);
+                            favoriteDatabase.favoriteDao().addFavorite(fav);
                         }
                     }).start();
                     Toast.makeText(getContext(), "Recipe add to favorite", Toast.LENGTH_SHORT).show();
