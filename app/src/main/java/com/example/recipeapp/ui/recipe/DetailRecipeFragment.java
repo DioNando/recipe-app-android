@@ -1,12 +1,18 @@
 package com.example.recipeapp.ui.recipe;
 
 import android.app.ProgressDialog;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.text.Html;
 import android.text.Spanned;
@@ -14,6 +20,7 @@ import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +30,9 @@ import com.example.recipeapp.Listeners.RecipeDetailsListener;
 import com.example.recipeapp.Models.RecipeDetailsResponse;
 import com.example.recipeapp.R;
 import com.example.recipeapp.RequestManager;
+import com.example.recipeapp.data.database.FavoriteDatabase;
+import com.example.recipeapp.data.entities.Favorite;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -46,6 +56,7 @@ public class DetailRecipeFragment extends Fragment {
     TextView textView_meal_name,textView_meal_source,textView_meal_summary;
     ImageView imageView_meal_image;
     RecyclerView recycler_meal_ingredients;
+    FloatingActionButton addFavoriteButton;
 
 
     RequestManager manager;
@@ -74,6 +85,8 @@ public class DetailRecipeFragment extends Fragment {
         return fragment;
     }
 
+    private FavoriteDatabase favoriteDB;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +94,20 @@ public class DetailRecipeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        RoomDatabase.Callback myCallBack = new RoomDatabase.Callback() {
+            @Override
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                super.onCreate(db);
+            }
+
+            @Override
+            public void onOpen(@NonNull SupportSQLiteDatabase db) {
+                super.onOpen(db);
+            }
+        };
+
+        favoriteDB = Room.databaseBuilder(requireContext(), FavoriteDatabase.class, "Favorite_DB").addCallback(myCallBack).build();
     }
 
     @Override
@@ -89,15 +116,42 @@ public class DetailRecipeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detail_recipe, container, false);
 
+
+
         // Récupérer l'ID depuis le Bundle
         Bundle bundle = getArguments();
         if (bundle != null && bundle.getString("recipe_id") != null) {
+
+            addFavoriteButton = view.findViewById(R.id.addFavoriteButton);
+
             id = Integer.parseInt(bundle.getString("recipe_id"));
             manager = new RequestManager(getContext());
             manager.getRecipeDetails(recipeDetailsListener,id);
             dialog = new ProgressDialog(getContext());
             dialog.setTitle("Loading Details...");
             dialog.show();
+
+            // TODO : Click event to add favorite
+
+            addFavoriteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Favorite fav = new Favorite(id, textView_meal_name.getText().toString());
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            favoriteDB.favoriteDao().addFavorite(fav);
+                        }
+                    }).start();
+                    Toast.makeText(getContext(), "Recipe add to favorite", Toast.LENGTH_SHORT).show();
+                    addFavoriteButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.md_theme_error)));
+                    addFavoriteButton.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.white)));
+                }
+            });
+
         } else {
             Toast.makeText(getContext(), "No recipe id provided", Toast.LENGTH_SHORT).show();
         }
@@ -121,6 +175,8 @@ public class DetailRecipeFragment extends Fragment {
             textView_meal_source.setText(response.sourceName);
             Spanned summary = Html.fromHtml(response.summary, Html.FROM_HTML_MODE_LEGACY);
             textView_meal_summary.setText(summary);
+
+
             Picasso.get().load(response.image).into(imageView_meal_image);
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recycler_meal_ingredients.getContext(),
                     DividerItemDecoration.VERTICAL);
