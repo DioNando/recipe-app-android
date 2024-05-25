@@ -95,7 +95,7 @@ public class DetailRecipeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        favoriteDatabase = FavoriteDatabase.getInstance(this);
+        favoriteDatabase = FavoriteDatabase.getInstance(getContext());
     }
 
     @Override
@@ -131,7 +131,7 @@ public class DetailRecipeFragment extends Fragment {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            favoriteDatabase.favoriteDao().addFavorite(fav);
+                            favoriteDatabase.favoriteDAO().addFavorite(fav);
                         }
                     }).start();
                     Toast.makeText(getContext(), "Recipe add to favorite", Toast.LENGTH_SHORT).show();

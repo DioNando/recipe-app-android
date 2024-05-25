@@ -11,11 +11,14 @@ import java.util.List;
 
 @Dao
 public interface FavoriteDAO {
-    @Query("SELECT * FROM Favorite")
+    @Query("SELECT * FROM Favorite ORDER BY favorite_id DESC")
     List<Favorite> getAllFavorites();
 
     /* @Query("SELECT * FROM Favorite WHERE id = :id")
     Favorite findById(int id); */
+
+    @Query("SELECT * FROM Favorite ORDER BY favorite_id DESC LIMIT 5")
+    List<Favorite> getLasted5Favorites();
 
     @Insert
     public void addFavorite(Favorite favorite);
