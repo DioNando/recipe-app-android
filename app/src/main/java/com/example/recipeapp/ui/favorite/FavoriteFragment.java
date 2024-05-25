@@ -20,13 +20,24 @@ import com.example.recipeapp.Adapters.RecipeAdapter;
 import com.example.recipeapp.Adapters.RecipeHomeAdapter;
 import com.example.recipeapp.Listeners.FavoriteClickListener;
 import com.example.recipeapp.R;
+import com.example.recipeapp.data.Recipe;
+import com.example.recipeapp.data.dao.FavoriteDAO;
+import com.example.recipeapp.data.database.FavoriteDatabase;
+import com.example.recipeapp.data.entities.Favorite;
 import com.example.recipeapp.databinding.FragmentFavoriteBinding;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class FavoriteFragment extends Fragment {
 
     private FragmentFavoriteBinding binding;
+
+    private FavoriteDatabase favoriteDatabase;
+    private FavoriteDAO favoriteDAO;
+    private FavoriteAdapter favoriteAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -37,10 +48,13 @@ public class FavoriteFragment extends Fragment {
         RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewFavorite);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView1.setLayoutManager(layoutManager1);
-        FavoriteAdapter adapterFavorite = new FavoriteAdapter(favoriteClickListener);
-        recyclerView1.setAdapter(adapterFavorite);
+        favoriteAdapter = new FavoriteAdapter(new ArrayList<>(), favoriteClickListener);
+        recyclerView1.setAdapter(favoriteAdapter);
 
+        favoriteDatabase = FavoriteDatabase.getInstance(getContext());
+        favoriteDAO = favoriteDatabase.favoriteDAO();
 
+        loadFavorites();
 
         return root;
     }
@@ -61,4 +75,14 @@ public class FavoriteFragment extends Fragment {
 
         }
     };
+
+    private void loadFavorites() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            final List<Favorite> favorites = favoriteDAO.getAllFavorites();
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(() -> favoriteAdapter.setFavorites(favorites));
+            }
+        });
+    }
 }

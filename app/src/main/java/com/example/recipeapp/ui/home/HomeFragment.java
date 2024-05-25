@@ -22,21 +22,27 @@ import com.example.recipeapp.Listeners.RecipeClickListener;
 import com.example.recipeapp.Models.RandomRecipeApiResponse;
 import com.example.recipeapp.R;
 import com.example.recipeapp.RequestManager;
+import com.example.recipeapp.data.dao.FavoriteDAO;
+import com.example.recipeapp.data.database.FavoriteDatabase;
+import com.example.recipeapp.data.entities.Favorite;
 import com.example.recipeapp.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-
     private ProgressDialog dialog;
     private RequestManager manager;
 
-    //private RandomRecipeAdapter randomRecipeAdapter;
     private RecyclerView recyclerView1;
-    List<String> tags = new ArrayList<>();
+    private FavoriteHomeAdapter favoriteHomeAdapter;
+
+    private FavoriteDatabase favoriteDatabase;
+    private FavoriteDAO favoriteDAO;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,24 +52,21 @@ public class HomeFragment extends Fragment {
         dialog = new ProgressDialog(requireContext());
         dialog.setTitle("Loading...");
         manager = new RequestManager(requireContext());
-        manager.getRandomRecipes(randomRecipeResponseListener,tags);
+        manager.getRandomRecipes(randomRecipeResponseListener, new ArrayList<>());
         dialog.show();
 
         recyclerView1 = root.findViewById(R.id.recyclerViewRecipe);
 
-        /* RecyclerView recyclerView2 = root.findViewById(R.id.recyclerViewIngredient);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView2.setLayoutManager(layoutManager2);
-        IngredientHomeAdapter adapterHomeIngredient = new IngredientHomeAdapter();
-        recyclerView2.setAdapter(adapterHomeIngredient); */
-
         RecyclerView recyclerView3 = root.findViewById(R.id.recyclerViewFavorite);
         LinearLayoutManager layoutManager3 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView3.setLayoutManager(layoutManager3);
-        FavoriteHomeAdapter adapterHomeFavorite = new FavoriteHomeAdapter(favoriteClickListener);
-        recyclerView3.setAdapter(adapterHomeFavorite);
+        favoriteHomeAdapter = new FavoriteHomeAdapter(new ArrayList<>(), favoriteClickListener);
+        recyclerView3.setAdapter(favoriteHomeAdapter);
 
+        favoriteDatabase = FavoriteDatabase.getInstance(getContext());
+        favoriteDAO = favoriteDatabase.favoriteDAO();
 
+        loadFavorites();
 
         return root;
     }
@@ -72,7 +75,6 @@ public class HomeFragment extends Fragment {
         @Override
         public void didFetch(RandomRecipeApiResponse response, String message) {
             dialog.dismiss();
-
             RecipeHomeAdapter adapterHomeRecipe = new RecipeHomeAdapter(requireContext(), response.recipes, recipeClickListener);
             LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView1.setLayoutManager(layoutManager1);
@@ -82,29 +84,32 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void didError(String message) {
+            dialog.dismiss();
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
         }
     };
 
-    private final RecipeClickListener recipeClickListener= new RecipeClickListener() {
-        @Override
-        public void onRecipeClicked(String id) {
-            Bundle bundle = new Bundle();
-            bundle.putString("recipe_id", id);
-            NavController navController = Navigation.findNavController(requireView());
-            navController.navigate(R.id.action_nav_home_to_nav_detail_recipe, bundle);
-
-        }
+    private final RecipeClickListener recipeClickListener = id -> {
+        Bundle bundle = new Bundle();
+        bundle.putString("recipe_id", id);
+        NavController navController = Navigation.findNavController(requireView());
+        navController.navigate(R.id.action_nav_home_to_nav_detail_recipe, bundle);
     };
 
-    private final FavoriteClickListener favoriteClickListener= new FavoriteClickListener() {
-        @Override
-        public void onFavoriteClicked(String id) {
-            Bundle bundle = new Bundle();
-            bundle.putString("recipe_id", id);
-            NavController navController = Navigation.findNavController(requireView());
-            navController.navigate(R.id.action_nav_home_to_nav_detail_recipe, bundle);
-
-        }
+    private final FavoriteClickListener favoriteClickListener = id -> {
+        Bundle bundle = new Bundle();
+        bundle.putString("recipe_id", id);
+        NavController navController = Navigation.findNavController(requireView());
+        navController.navigate(R.id.action_nav_home_to_nav_detail_recipe, bundle);
     };
+
+    private void loadFavorites() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            final List<Favorite> favorites = favoriteDAO.getLasted5Favorites();
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(() -> favoriteHomeAdapter.setFavorites(favorites));
+            }
+        });
+    }
 }
