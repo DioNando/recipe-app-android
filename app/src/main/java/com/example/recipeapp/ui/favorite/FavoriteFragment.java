@@ -1,5 +1,6 @@
 package com.example.recipeapp.ui.favorite;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +20,15 @@ import com.example.recipeapp.Adapters.IngredientHomeAdapter;
 import com.example.recipeapp.Adapters.RecipeAdapter;
 import com.example.recipeapp.Adapters.RecipeHomeAdapter;
 import com.example.recipeapp.Listeners.FavoriteClickListener;
+import com.example.recipeapp.LoginActivity;
 import com.example.recipeapp.R;
 import com.example.recipeapp.data.Recipe;
 import com.example.recipeapp.data.dao.FavoriteDAO;
 import com.example.recipeapp.data.database.FavoriteDatabase;
 import com.example.recipeapp.data.entities.Favorite;
 import com.example.recipeapp.databinding.FragmentFavoriteBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +43,25 @@ public class FavoriteFragment extends Fragment {
     private FavoriteDAO favoriteDAO;
     private FavoriteAdapter favoriteAdapter;
 
+    private FirebaseAuth mAuth;
+    FirebaseUser user;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentFavoriteBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        if (user == null) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish(); // Optionnel : fermer l'activité actuelle
+        }else{
+
+        }
 
         RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewFavorite);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);

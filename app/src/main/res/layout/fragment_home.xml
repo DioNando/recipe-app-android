@@ -51,7 +51,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:fontFamily="@font/patrick_hand_sc"
-                    android:text="Hi, android user"
+                    android:text="Hey, let's cook!"
                     android:textAlignment="textEnd"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="34sp"

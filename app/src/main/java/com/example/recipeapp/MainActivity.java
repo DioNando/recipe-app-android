@@ -77,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
             // Récupérer le layout du nav_header
             View headerView = navigationView.getHeaderView(0);
             // Récupérer la TextView où afficher l'adresse e-mail de l'utilisateur
+            TextView nameTextView = headerView.findViewById(R.id.textViewUsername);
             TextView emailTextView = headerView.findViewById(R.id.textView);
+            nameTextView.setText(user.getDisplayName());
             // Définir le texte de la TextView avec l'adresse e-mail de l'utilisateur
             emailTextView.setText(user.getEmail());
             // Afficher le bouton de déconnexion

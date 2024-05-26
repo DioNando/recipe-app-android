@@ -5,20 +5,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.recipeapp.LoginActivity;
+import com.example.recipeapp.R;
 import com.example.recipeapp.databinding.FragmentProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileFragment extends Fragment {
 
-    private FirebaseAuth mAuth;
     private FragmentProfileBinding binding;
+    private FirebaseAuth mAuth;
     FirebaseUser user;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -36,7 +38,11 @@ public class ProfileFragment extends Fragment {
             getActivity().finish(); // Optionnel : fermer l'activité actuelle
         }else{
 
+            TextView emailTextView = root.findViewById(R.id.textViewEmail);
+            emailTextView.setText(user.getEmail());
+
         }
+
 
 
         return root;
