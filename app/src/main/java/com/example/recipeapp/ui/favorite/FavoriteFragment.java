@@ -19,17 +19,25 @@ import com.example.recipeapp.Adapters.FavoriteAdapter;
 import com.example.recipeapp.Listeners.FavoriteClickListener;
 import com.example.recipeapp.LoginActivity;
 import com.example.recipeapp.R;
+import com.example.recipeapp.data.dao.FavoriteDAO;
+import com.example.recipeapp.data.database.FavoriteDatabase;
+import com.example.recipeapp.data.entities.Favorite;
 import com.example.recipeapp.databinding.FragmentFavoriteBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class FavoriteFragment extends Fragment {
 
     private FragmentFavoriteBinding binding;
 
     private FavoriteViewModel favoriteViewModel;
+    private FavoriteDatabase favoriteDatabase;
+    private FavoriteDAO favoriteDAO;
     private FavoriteAdapter favoriteAdapter;
 
     private FirebaseAuth mAuth;
@@ -49,16 +57,22 @@ public class FavoriteFragment extends Fragment {
             startActivity(intent);
             requireActivity().finish();
             return null;
+        } else {
+            RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewFavorite);
+            LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+            recyclerView1.setLayoutManager(layoutManager1);
+            favoriteAdapter = new FavoriteAdapter(new ArrayList<>(), favoriteClickListener);
+            recyclerView1.setAdapter(favoriteAdapter);
+
+            favoriteViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
+
+            favoriteDatabase = FavoriteDatabase.getInstance(getContext());
+            favoriteDAO = favoriteDatabase.favoriteDAO();
+
+            favoriteViewModel.getFavorites().observe(getViewLifecycleOwner(), favorites -> favoriteAdapter.setFavorites(favorites));
+
+            loadFavorites();
         }
-
-        RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewFavorite);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView1.setLayoutManager(layoutManager1);
-        favoriteAdapter = new FavoriteAdapter(new ArrayList<>(), favoriteClickListener);
-        recyclerView1.setAdapter(favoriteAdapter);
-
-        favoriteViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
-        favoriteViewModel.getFavorites().observe(getViewLifecycleOwner(), favorites -> favoriteAdapter.setFavorites(favorites));
 
         return root;
     }
@@ -79,9 +93,19 @@ public class FavoriteFragment extends Fragment {
         }
 
         @Override
-        public void onFavoriteDeleteClicked(String id) {
+        public void onFavoriteDeleteClicked(String id, String title) {
             favoriteViewModel.deleteFavorite(id);
-            Toast.makeText(getContext(), "Click on delete " + id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), title + " removed from favorites", Toast.LENGTH_SHORT).show();
         }
     };
+
+    private void loadFavorites() {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            final List<Favorite> favorites = favoriteDAO.getAllFavorites();
+            if (getActivity() != null) {
+                getActivity().runOnUiThread(() -> favoriteAdapter.setFavorites(favorites));
+            }
+        });
+    }
 }

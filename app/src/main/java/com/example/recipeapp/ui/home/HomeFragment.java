@@ -127,10 +127,8 @@ public class HomeFragment extends Fragment {
         }
 
         @Override
-        public void onFavoriteDeleteClicked(String id) {
-            favoriteViewModel.deleteFavorite(id);
-            Toast.makeText(getContext(), "Favori supprimé", Toast.LENGTH_SHORT).show();
-            loadFavorites();  // Refresh the list after deletion
+        public void onFavoriteDeleteClicked(String id, String title) {
+
         }
     };
 

@@ -48,7 +48,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
                 listener.onFavoriteClicked(String.valueOf(favorite.getRecipe_id()))
         );
         holder.button_favorite_delete.setOnClickListener(v ->
-                listener.onFavoriteDeleteClicked(String.valueOf(favorite.getId()))
+                listener.onFavoriteDeleteClicked(String.valueOf(favorite.getId()), favorite.getTitle())
         );
     }
 
