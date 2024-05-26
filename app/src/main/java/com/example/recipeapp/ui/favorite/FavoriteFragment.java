@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -55,13 +56,13 @@ public class FavoriteFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        if (user == null) {
+       /* if (user == null) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
             getActivity().finish(); // Optionnel : fermer l'activité actuelle
         }else{
 
-        }
+        } */
 
         RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewFavorite);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
@@ -91,6 +92,12 @@ public class FavoriteFragment extends Fragment {
             NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_nav_favorite_to_nav_detail_recipe, bundle);
 
+        }
+
+        public void onFavoriteDeleteClicked(String id) {
+            // favoriteDAO.deleteFavorite(id);
+            Toast.makeText(getContext(), "Click on delete", Toast.LENGTH_SHORT).show();
+            loadFavorites();
         }
     };
 
