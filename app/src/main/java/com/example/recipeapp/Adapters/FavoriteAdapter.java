@@ -3,6 +3,8 @@ package com.example.recipeapp.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +24,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
 
     public FavoriteAdapter(List<Favorite> favorites, FavoriteClickListener listener) {
         this.favorites = favorites;
-        this.listener=listener;
+        this.listener = listener;
     }
 
     public void setFavorites(List<Favorite> favorites) {
@@ -42,12 +44,12 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
         Favorite favorite = favorites.get(position);
         holder.textView_favorite_id.setText(String.valueOf(favorite.getRecipe_id()));
         holder.textView_favorite_name.setText(favorite.getTitle());
-        holder.favorite_list_container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onFavoriteClicked(String.valueOf(favorite.getRecipe_id()));
-            }
-        });
+        holder.favorite_list_container.setOnClickListener(v ->
+                listener.onFavoriteClicked(String.valueOf(favorite.getRecipe_id()))
+        );
+        holder.button_favorite_delete.setOnClickListener(v ->
+                listener.onFavoriteDeleteClicked(String.valueOf(favorite.getId()))
+        );
     }
 
     @Override
@@ -57,12 +59,16 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         CardView favorite_list_container;
-        TextView textView_favorite_id,textView_favorite_name;
+        ImageButton button_favorite_delete;
+        TextView textView_favorite_id, textView_favorite_name;
+
+
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
-            favorite_list_container=itemView.findViewById(R.id.favorite_list_container);
-            textView_favorite_id=itemView.findViewById(R.id.textView_favorite_id);
-            textView_favorite_name=itemView.findViewById(R.id.textView_favorite_name);
+            favorite_list_container = itemView.findViewById(R.id.favorite_list_container);
+            textView_favorite_id = itemView.findViewById(R.id.textView_favorite_id);
+            textView_favorite_name = itemView.findViewById(R.id.textView_favorite_name);
+            button_favorite_delete = itemView.findViewById(R.id.button_favorite_delete);
         }
     }
 }

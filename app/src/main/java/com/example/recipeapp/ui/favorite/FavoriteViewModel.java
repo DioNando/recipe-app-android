@@ -35,7 +35,7 @@ public class FavoriteViewModel extends AndroidViewModel {
 
     public void deleteFavorite(String id) {
         executorService.execute(() -> {
-            // favoriteDAO.deleteFavorite(id);
+            favoriteDAO.deleteFavorite(id);
             loadFavorites();
         });
     }

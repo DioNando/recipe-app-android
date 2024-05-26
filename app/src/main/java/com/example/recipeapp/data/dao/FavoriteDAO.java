@@ -23,7 +23,7 @@ public interface FavoriteDAO {
     @Insert
     public void addFavorite(Favorite favorite);
 
-    @Delete
-    public void deleteFavorite(Favorite favorite);
+    @Query("DELETE FROM Favorite WHERE favorite_id = :id")
+    public void deleteFavorite(String id);
 
 }

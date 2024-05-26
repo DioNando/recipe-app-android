@@ -1,17 +1,15 @@
 package com.example.recipeapp.ui.home;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,7 +20,6 @@ import com.example.recipeapp.Adapters.RecipeHomeAdapter;
 import com.example.recipeapp.Listeners.FavoriteClickListener;
 import com.example.recipeapp.Listeners.RandomRecipeResponseListener;
 import com.example.recipeapp.Listeners.RecipeClickListener;
-import com.example.recipeapp.LoginActivity;
 import com.example.recipeapp.Models.RandomRecipeApiResponse;
 import com.example.recipeapp.R;
 import com.example.recipeapp.RequestManager;
@@ -30,6 +27,7 @@ import com.example.recipeapp.data.dao.FavoriteDAO;
 import com.example.recipeapp.data.database.FavoriteDatabase;
 import com.example.recipeapp.data.entities.Favorite;
 import com.example.recipeapp.databinding.FragmentHomeBinding;
+import com.example.recipeapp.ui.favorite.FavoriteViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -51,15 +49,14 @@ public class HomeFragment extends Fragment {
     private FavoriteDAO favoriteDAO;
 
     private FirebaseAuth mAuth;
-    FirebaseUser user;
+    private FirebaseUser user;
 
-    CardView cardViewFavorite;
+    private FavoriteViewModel favoriteViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
 
         dialog = new ProgressDialog(requireContext());
         dialog.setTitle("Loading...");
@@ -82,13 +79,10 @@ public class HomeFragment extends Fragment {
             favoriteDatabase = FavoriteDatabase.getInstance(getContext());
             favoriteDAO = favoriteDatabase.favoriteDAO();
 
+            favoriteViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
+
             loadFavorites();
-        }else{
-
-
         }
-
-
 
         return root;
     }
@@ -98,15 +92,13 @@ public class HomeFragment extends Fragment {
         public void didFetch(RandomRecipeApiResponse response, String message) {
             dialog.dismiss();
             RecipeHomeAdapter adapterHomeRecipe = new RecipeHomeAdapter(requireContext(), response.recipes, recipeClickListener);
+            LinearLayoutManager layoutManager;
             if (user != null) {
-                LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                recyclerView1.setLayoutManager(layoutManager1);
+                layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
             } else {
-                LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-                recyclerView1.setLayoutManager(layoutManager1);
+                layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
             }
-            // LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-            // recyclerView1.setLayoutManager(layoutManager1);
+            recyclerView1.setLayoutManager(layoutManager);
             recyclerView1.setHasFixedSize(true);
             recyclerView1.setAdapter(adapterHomeRecipe);
         }
@@ -125,11 +117,21 @@ public class HomeFragment extends Fragment {
         navController.navigate(R.id.action_nav_home_to_nav_detail_recipe, bundle);
     };
 
-    private final FavoriteClickListener favoriteClickListener = id -> {
-        Bundle bundle = new Bundle();
-        bundle.putString("recipe_id", id);
-        NavController navController = Navigation.findNavController(requireView());
-        navController.navigate(R.id.action_nav_home_to_nav_detail_recipe, bundle);
+    private final FavoriteClickListener favoriteClickListener = new FavoriteClickListener() {
+        @Override
+        public void onFavoriteClicked(String id) {
+            Bundle bundle = new Bundle();
+            bundle.putString("recipe_id", id);
+            NavController navController = Navigation.findNavController(requireView());
+            navController.navigate(R.id.action_nav_home_to_nav_detail_recipe, bundle);
+        }
+
+        @Override
+        public void onFavoriteDeleteClicked(String id) {
+            favoriteViewModel.deleteFavorite(id);
+            Toast.makeText(getContext(), "Favori supprimé", Toast.LENGTH_SHORT).show();
+            loadFavorites();  // Refresh the list after deletion
+        }
     };
 
     private void loadFavorites() {

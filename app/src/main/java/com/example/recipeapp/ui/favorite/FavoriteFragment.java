@@ -19,7 +19,6 @@ import com.example.recipeapp.Adapters.FavoriteAdapter;
 import com.example.recipeapp.Listeners.FavoriteClickListener;
 import com.example.recipeapp.LoginActivity;
 import com.example.recipeapp.R;
-import com.example.recipeapp.data.entities.Favorite;
 import com.example.recipeapp.databinding.FragmentFavoriteBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -79,10 +78,10 @@ public class FavoriteFragment extends Fragment {
             navController.navigate(R.id.action_nav_favorite_to_nav_detail_recipe, bundle);
         }
 
-        /* @Override
+        @Override
         public void onFavoriteDeleteClicked(String id) {
             favoriteViewModel.deleteFavorite(id);
-            Toast.makeText(getContext(), "Click on delete", Toast.LENGTH_SHORT).show();
-        } */
+            Toast.makeText(getContext(), "Click on delete " + id, Toast.LENGTH_SHORT).show();
+        }
     };
 }
