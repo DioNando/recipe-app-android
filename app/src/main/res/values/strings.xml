@@ -31,7 +31,7 @@
     <string name="login_with_your_account">Login with your account</string>
     <string name="register_on_recipes">Register on recipes</string>
     <string name="logout">Logout</string>
-    <string name="api_key">a56eaab418f84889842a974b9a07b2a9</string>
+    <string name="api_key">ef58950f6b154020bd50f0d46724680f</string>
     <string-array name="tags">
         <item>main course</item>
         <item>side dish</item>

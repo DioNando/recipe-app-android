@@ -130,5 +130,13 @@ public class RecipeFragment extends Fragment {
             navController.navigate(R.id.action_nav_recipe_to_nav_detail_recipe, bundle);
 
         }
+
+        /* @Override
+        public void onAddFavoriteClicked(String id, String title) {
+            Favorite fav = new Favorite(Integer.parseInt(id), title);
+
+            favoriteViewModel.addFavorite(fav);
+            Toast.makeText(getContext(), title + " add to favorites", Toast.LENGTH_SHORT).show();
+        } */
     };
 }
