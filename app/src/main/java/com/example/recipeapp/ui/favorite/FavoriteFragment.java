@@ -9,43 +9,32 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recipeapp.Adapters.FavoriteAdapter;
-import com.example.recipeapp.Adapters.FavoriteHomeAdapter;
-import com.example.recipeapp.Adapters.IngredientAdapter;
-import com.example.recipeapp.Adapters.IngredientHomeAdapter;
-import com.example.recipeapp.Adapters.RecipeAdapter;
-import com.example.recipeapp.Adapters.RecipeHomeAdapter;
 import com.example.recipeapp.Listeners.FavoriteClickListener;
 import com.example.recipeapp.LoginActivity;
 import com.example.recipeapp.R;
-import com.example.recipeapp.data.Recipe;
-import com.example.recipeapp.data.dao.FavoriteDAO;
-import com.example.recipeapp.data.database.FavoriteDatabase;
 import com.example.recipeapp.data.entities.Favorite;
 import com.example.recipeapp.databinding.FragmentFavoriteBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class FavoriteFragment extends Fragment {
 
     private FragmentFavoriteBinding binding;
 
-    private FavoriteDatabase favoriteDatabase;
-    private FavoriteDAO favoriteDAO;
+    private FavoriteViewModel favoriteViewModel;
     private FavoriteAdapter favoriteAdapter;
 
     private FirebaseAuth mAuth;
-    FirebaseUser user;
+    private FirebaseUser user;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,13 +45,12 @@ public class FavoriteFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-       /* if (user == null) {
+        if (user == null) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
-            getActivity().finish(); // Optionnel : fermer l'activité actuelle
-        }else{
-
-        } */
+            requireActivity().finish();
+            return null;
+        }
 
         RecyclerView recyclerView1 = root.findViewById(R.id.recyclerViewFavorite);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
@@ -70,10 +58,8 @@ public class FavoriteFragment extends Fragment {
         favoriteAdapter = new FavoriteAdapter(new ArrayList<>(), favoriteClickListener);
         recyclerView1.setAdapter(favoriteAdapter);
 
-        favoriteDatabase = FavoriteDatabase.getInstance(getContext());
-        favoriteDAO = favoriteDatabase.favoriteDAO();
-
-        loadFavorites();
+        favoriteViewModel = new ViewModelProvider(this).get(FavoriteViewModel.class);
+        favoriteViewModel.getFavorites().observe(getViewLifecycleOwner(), favorites -> favoriteAdapter.setFavorites(favorites));
 
         return root;
     }
@@ -84,30 +70,19 @@ public class FavoriteFragment extends Fragment {
         binding = null;
     }
 
-    private final FavoriteClickListener favoriteClickListener= new FavoriteClickListener() {
+    private final FavoriteClickListener favoriteClickListener = new FavoriteClickListener() {
         @Override
         public void onFavoriteClicked(String id) {
             Bundle bundle = new Bundle();
             bundle.putString("recipe_id", id);
             NavController navController = Navigation.findNavController(requireView());
             navController.navigate(R.id.action_nav_favorite_to_nav_detail_recipe, bundle);
-
         }
 
+        /* @Override
         public void onFavoriteDeleteClicked(String id) {
-            // favoriteDAO.deleteFavorite(id);
+            favoriteViewModel.deleteFavorite(id);
             Toast.makeText(getContext(), "Click on delete", Toast.LENGTH_SHORT).show();
-            loadFavorites();
-        }
+        } */
     };
-
-    private void loadFavorites() {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            final List<Favorite> favorites = favoriteDAO.getAllFavorites();
-            if (getActivity() != null) {
-                getActivity().runOnUiThread(() -> favoriteAdapter.setFavorites(favorites));
-            }
-        });
-    }
 }

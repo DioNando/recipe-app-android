@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/patrick_hand_sc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/nav_header_title"
+        android:text="iCook"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"
         android:textStyle="bold" />
