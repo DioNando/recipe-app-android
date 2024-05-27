@@ -1,6 +1,7 @@
 package com.example.recipeapp.ui.recipe;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 
@@ -27,12 +28,15 @@ import android.widget.Toast;
 
 import com.example.recipeapp.Adapters.IngredientAdapter;
 import com.example.recipeapp.Listeners.RecipeDetailsListener;
+import com.example.recipeapp.LoginActivity;
 import com.example.recipeapp.Models.RecipeDetailsResponse;
 import com.example.recipeapp.R;
 import com.example.recipeapp.RequestManager;
 import com.example.recipeapp.data.database.FavoriteDatabase;
 import com.example.recipeapp.data.entities.Favorite;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
@@ -53,6 +57,8 @@ public class DetailRecipeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     int id;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
     TextView textView_meal_name,textView_meal_source,textView_meal_summary;
     ImageView imageView_meal_image;
     RecyclerView recycler_meal_ingredients;
@@ -105,6 +111,10 @@ public class DetailRecipeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail_recipe, container, false);
 
 
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+
 
         // Récupérer l'ID depuis le Bundle
         Bundle bundle = getArguments();
@@ -142,6 +152,11 @@ public class DetailRecipeFragment extends Fragment {
 
         } else {
             Toast.makeText(getContext(), "No recipe id provided", Toast.LENGTH_SHORT).show();
+        }
+
+        if (user == null) {
+            // TODO : Mask button
+            addFavoriteButton.hide();
         }
         findViews(view);
         return view;
