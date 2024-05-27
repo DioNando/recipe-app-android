@@ -19,7 +19,7 @@ public abstract class FavoriteDatabase extends RoomDatabase {
     public static synchronized FavoriteDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                            FavoriteDatabase.class, "favorite_database")
+                            FavoriteDatabase.class, "favorite_db")
                     .fallbackToDestructiveMigration()
                     .build();
         }

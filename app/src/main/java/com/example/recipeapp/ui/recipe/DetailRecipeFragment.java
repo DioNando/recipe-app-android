@@ -39,6 +39,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -135,8 +138,8 @@ public class DetailRecipeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-
-                    Favorite fav = new Favorite(id, textView_meal_name.getText().toString());
+                    String currentDateAndTime = getCurrentDateAndTime();
+                    Favorite fav = new Favorite(id, textView_meal_name.getText().toString(), currentDateAndTime);
 
                     new Thread(new Runnable() {
                         @Override
@@ -160,6 +163,12 @@ public class DetailRecipeFragment extends Fragment {
         }
         findViews(view);
         return view;
+    }
+
+    private String getCurrentDateAndTime() {
+        // Format de la date et de l'heure
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());
     }
 
     private void findViews(View view) {

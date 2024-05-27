@@ -59,12 +59,13 @@ public class FavoriteHomeAdapter extends RecyclerView.Adapter<FavoriteHomeAdapte
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         CardView favorite_list_container;
-        TextView textView_favorite_id,textView_favorite_name;
+        TextView textView_favorite_id,textView_favorite_name, textView_favorite_date;
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
             favorite_list_container=itemView.findViewById(R.id.favorite_list_container);
             textView_favorite_id=itemView.findViewById(R.id.textView_favorite_id);
             textView_favorite_name=itemView.findViewById(R.id.textView_favorite_name);
+            textView_favorite_date=itemView.findViewById(R.id.textView_favorite_date);
         }
     }
 }

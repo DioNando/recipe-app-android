@@ -17,12 +17,13 @@ public class Favorite {
     @ColumnInfo(name = "title")
     String title;
 
-    // @ColumnInfo(name = "date_added")
-    // String date_added;
+    @ColumnInfo(name = "date_added")
+    String date_added;
 
-    public Favorite(int recipe_id, String title) {
+    public Favorite(int recipe_id, String title, String date_added) {
         this.recipe_id = recipe_id;
         this.title = title;
+        this.date_added = date_added;
     }
 
     public int getId() {
@@ -49,11 +50,11 @@ public class Favorite {
         this.title = title;
     }
 
-   /* public String getDate_added() {
+   public String getDate_added() {
         return date_added;
     }
 
     public void setDate_added(String date_added) {
         this.date_added = date_added;
-    } */
+    }
 }

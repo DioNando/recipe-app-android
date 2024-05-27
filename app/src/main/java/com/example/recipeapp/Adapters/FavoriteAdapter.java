@@ -44,6 +44,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
         Favorite favorite = favorites.get(position);
         holder.textView_favorite_id.setText(String.valueOf(favorite.getRecipe_id()));
         holder.textView_favorite_name.setText(favorite.getTitle());
+        holder.textView_favorite_date.setText(favorite.getDate_added());
         holder.favorite_list_container.setOnClickListener(v ->
                 listener.onFavoriteClicked(String.valueOf(favorite.getRecipe_id()))
         );
@@ -60,7 +61,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         CardView favorite_list_container;
         ImageButton button_favorite_delete;
-        TextView textView_favorite_id, textView_favorite_name;
+        TextView textView_favorite_id, textView_favorite_name, textView_favorite_date;
 
 
         public CardViewHolder(@NonNull View itemView) {
@@ -68,6 +69,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
             favorite_list_container = itemView.findViewById(R.id.favorite_list_container);
             textView_favorite_id = itemView.findViewById(R.id.textView_favorite_id);
             textView_favorite_name = itemView.findViewById(R.id.textView_favorite_name);
+            textView_favorite_date = itemView.findViewById(R.id.textView_favorite_date);
             button_favorite_delete = itemView.findViewById(R.id.button_favorite_delete);
         }
     }
